@@ -1,0 +1,117 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Product {
+  category        String?
+  createdAt       DateTime                     @default(now())
+  description     String?
+  dimensions      String?
+  id              String                       @id @default(cuid())
+  images          Json?
+  name            String?
+  order           Order?                       @relation(fields: [orderId], references: [id])
+  orderId         String?
+  price           Float?
+  reviews         Review[]
+  shippingOptions EnumProductShippingOptions[]
+  status          EnumProductStatus?
+  stockQuantity   Int?
+  updatedAt       DateTime                     @updatedAt
+  weight          Float?
+  wishlists       Wishlist[]
+}
+
+model Order {
+  carrier            String?
+  carrierInformation String?
+  createdAt          DateTime              @default(now())
+  id                 String                @id @default(cuid())
+  orderNumber        String?
+  orderStatus        EnumOrderOrderStatus?
+  products           Product[]
+  shippingAddress    String?
+  status             String?
+  totalAmount        Float?
+  trackingNumber     String?
+  updatedAt          DateTime              @updatedAt
+  user               User?                 @relation(fields: [userId], references: [id])
+  userId             String?
+}
+
+model Review {
+  comment    String?
+  createdAt  DateTime @default(now())
+  id         String   @id @default(cuid())
+  isVerified Boolean?
+  product    Product? @relation(fields: [productId], references: [id])
+  productId  String?
+  rating     Int?
+  updatedAt  DateTime @updatedAt
+  user       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+}
+
+model Message {
+  content             String?
+  createdAt           DateTime  @default(now())
+  id                  String    @id @default(cuid())
+  isRead              Boolean?
+  receivedAtTimestamp DateTime?
+  receiver            String?
+  sender              String?
+  sentAt              DateTime?
+  sentAtTimestamp     DateTime?
+  updatedAt           DateTime  @updatedAt
+}
+
+model User {
+  billingAddress  String?
+  createdAt       DateTime      @default(now())
+  email           String?       @unique
+  firstName       String?
+  id              String        @id @default(cuid())
+  lastName        String?
+  orders          Order[]
+  password        String
+  profilePicture  Json?
+  reviews         Review[]
+  role            EnumUserRole?
+  roles           Json
+  shippingAddress String?
+  updatedAt       DateTime      @updatedAt
+  username        String        @unique
+  wishlists       Wishlist[]
+}
+
+model Wishlist {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  notes     String?
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+  updatedAt DateTime @updatedAt
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+enum EnumProductShippingOptions {
+  Option1
+}
+
+enum EnumProductStatus {
+  Option1
+}
+
+enum EnumOrderOrderStatus {
+  Option1
+}
+
+enum EnumUserRole {
+  Option1
+}
