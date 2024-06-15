@@ -66,6 +66,7 @@ export class ReviewControllerBase {
         comment: true,
         createdAt: true,
         id: true,
+        isVerified: true,
 
         product: {
           select: {
@@ -105,6 +106,7 @@ export class ReviewControllerBase {
         comment: true,
         createdAt: true,
         id: true,
+        isVerified: true,
 
         product: {
           select: {
@@ -145,6 +147,7 @@ export class ReviewControllerBase {
         comment: true,
         createdAt: true,
         id: true,
+        isVerified: true,
 
         product: {
           select: {
@@ -208,6 +211,7 @@ export class ReviewControllerBase {
           comment: true,
           createdAt: true,
           id: true,
+          isVerified: true,
 
           product: {
             select: {
@@ -256,6 +260,7 @@ export class ReviewControllerBase {
           comment: true,
           createdAt: true,
           id: true,
+          isVerified: true,
 
           product: {
             select: {

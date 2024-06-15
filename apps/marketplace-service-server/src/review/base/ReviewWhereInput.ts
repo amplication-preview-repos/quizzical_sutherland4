@@ -15,6 +15,7 @@ import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
+import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { ProductWhereUniqueInput } from "../../product/base/ProductWhereUniqueInput";
 import { IntNullableFilter } from "../../util/IntNullableFilter";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
@@ -42,6 +43,17 @@ class ReviewWhereInput {
     nullable: true,
   })
   id?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: BooleanNullableFilter,
+  })
+  @Type(() => BooleanNullableFilter)
+  @IsOptional()
+  @Field(() => BooleanNullableFilter, {
+    nullable: true,
+  })
+  isVerified?: BooleanNullableFilter;
 
   @ApiProperty({
     required: false,

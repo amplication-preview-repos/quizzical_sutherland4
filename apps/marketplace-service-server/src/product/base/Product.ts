@@ -17,6 +17,8 @@ import {
   IsDate,
   ValidateNested,
   IsNumber,
+  IsEnum,
+  IsInt,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { IsJSONValue } from "../../validators";
@@ -24,6 +26,9 @@ import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
 import { Order } from "../../order/base/Order";
 import { Review } from "../../review/base/Review";
+import { EnumProductShippingOptions } from "./EnumProductShippingOptions";
+import { EnumProductStatus } from "./EnumProductStatus";
+import { Wishlist } from "../../wishlist/base/Wishlist";
 
 @ObjectType()
 class Product {
@@ -56,6 +61,17 @@ class Product {
     nullable: true,
   })
   description!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  dimensions!: string | null;
 
   @ApiProperty({
     required: true,
@@ -116,12 +132,68 @@ class Product {
   reviews?: Array<Review>;
 
   @ApiProperty({
+    required: false,
+    enum: EnumProductShippingOptions,
+    isArray: true,
+  })
+  @IsEnum(EnumProductShippingOptions, {
+    each: true,
+  })
+  @IsOptional()
+  @Field(() => [EnumProductShippingOptions], {
+    nullable: true,
+  })
+  shippingOptions?: Array<"Option1">;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumProductStatus,
+  })
+  @IsEnum(EnumProductStatus)
+  @IsOptional()
+  @Field(() => EnumProductStatus, {
+    nullable: true,
+  })
+  status?: "Option1" | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  stockQuantity!: number | null;
+
+  @ApiProperty({
     required: true,
   })
   @IsDate()
   @Type(() => Date)
   @Field(() => Date)
   updatedAt!: Date;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsNumber()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  weight!: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Wishlist],
+  })
+  @ValidateNested()
+  @Type(() => Wishlist)
+  @IsOptional()
+  wishlists?: Array<Wishlist>;
 }
 
 export { Product as Product };

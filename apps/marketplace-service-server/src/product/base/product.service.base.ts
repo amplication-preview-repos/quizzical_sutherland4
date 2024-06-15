@@ -15,6 +15,7 @@ import {
   Prisma,
   Product as PrismaProduct,
   Review as PrismaReview,
+  Wishlist as PrismaWishlist,
   Order as PrismaOrder,
 } from "@prisma/client";
 
@@ -60,6 +61,17 @@ export class ProductServiceBase {
         where: { id: parentId },
       })
       .reviews(args);
+  }
+
+  async findWishlists(
+    parentId: string,
+    args: Prisma.WishlistFindManyArgs
+  ): Promise<PrismaWishlist[]> {
+    return this.prisma.product
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .wishlists(args);
   }
 
   async getOrder(parentId: string): Promise<PrismaOrder | null> {

@@ -28,6 +28,8 @@ import { UpdateProductArgs } from "./UpdateProductArgs";
 import { DeleteProductArgs } from "./DeleteProductArgs";
 import { ReviewFindManyArgs } from "../../review/base/ReviewFindManyArgs";
 import { Review } from "../../review/base/Review";
+import { WishlistFindManyArgs } from "../../wishlist/base/WishlistFindManyArgs";
+import { Wishlist } from "../../wishlist/base/Wishlist";
 import { Order } from "../../order/base/Order";
 import { ProductService } from "../product.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -173,6 +175,26 @@ export class ProductResolverBase {
     @graphql.Args() args: ReviewFindManyArgs
   ): Promise<Review[]> {
     const results = await this.service.findReviews(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Wishlist], { name: "wishlists" })
+  @nestAccessControl.UseRoles({
+    resource: "Wishlist",
+    action: "read",
+    possession: "any",
+  })
+  async findWishlists(
+    @graphql.Parent() parent: Product,
+    @graphql.Args() args: WishlistFindManyArgs
+  ): Promise<Wishlist[]> {
+    const results = await this.service.findWishlists(parent.id, args);
 
     if (!results) {
       return [];

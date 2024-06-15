@@ -12,18 +12,42 @@ https://docs.amplication.com/how-to/custom-code
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import {
-  IsDate,
   IsString,
   IsOptional,
+  IsDate,
+  IsEnum,
   ValidateNested,
   IsNumber,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { EnumOrderOrderStatus } from "./EnumOrderOrderStatus";
 import { Product } from "../../product/base/Product";
 import { User } from "../../user/base/User";
 
 @ObjectType()
 class Order {
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  carrier!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  carrierInformation!: string | null;
+
   @ApiProperty({
     required: true,
   })
@@ -50,6 +74,17 @@ class Order {
     nullable: true,
   })
   orderNumber!: string | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumOrderOrderStatus,
+  })
+  @IsEnum(EnumOrderOrderStatus)
+  @IsOptional()
+  @Field(() => EnumOrderOrderStatus, {
+    nullable: true,
+  })
+  orderStatus?: "Option1" | null;
 
   @ApiProperty({
     required: false,
@@ -92,6 +127,17 @@ class Order {
     nullable: true,
   })
   totalAmount!: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  trackingNumber!: string | null;
 
   @ApiProperty({
     required: true,

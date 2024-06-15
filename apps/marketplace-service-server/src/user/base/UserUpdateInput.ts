@@ -11,16 +11,29 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
+import { IsString, IsOptional, ValidateNested, IsEnum } from "class-validator";
 import { OrderUpdateManyWithoutUsersInput } from "./OrderUpdateManyWithoutUsersInput";
 import { Type } from "class-transformer";
-import { ReviewUpdateManyWithoutUsersInput } from "./ReviewUpdateManyWithoutUsersInput";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
+import { ReviewUpdateManyWithoutUsersInput } from "./ReviewUpdateManyWithoutUsersInput";
+import { EnumUserRole } from "./EnumUserRole";
+import { WishlistUpdateManyWithoutUsersInput } from "./WishlistUpdateManyWithoutUsersInput";
 
 @InputType()
 class UserUpdateInput {
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  billingAddress?: string | null;
+
   @ApiProperty({
     required: false,
     type: String,
@@ -79,6 +92,16 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
+  })
+  @IsJSONValue()
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  profilePicture?: InputJsonValue;
+
+  @ApiProperty({
+    required: false,
     type: () => ReviewUpdateManyWithoutUsersInput,
   })
   @ValidateNested()
@@ -88,6 +111,17 @@ class UserUpdateInput {
     nullable: true,
   })
   reviews?: ReviewUpdateManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumUserRole,
+  })
+  @IsEnum(EnumUserRole)
+  @IsOptional()
+  @Field(() => EnumUserRole, {
+    nullable: true,
+  })
+  role?: "Option1" | null;
 
   @ApiProperty({
     required: false,
@@ -108,7 +142,30 @@ class UserUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
+  shippingAddress?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
   username?: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => WishlistUpdateManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => WishlistUpdateManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => WishlistUpdateManyWithoutUsersInput, {
+    nullable: true,
+  })
+  wishlists?: WishlistUpdateManyWithoutUsersInput;
 }
 
 export { UserUpdateInput as UserUpdateInput };

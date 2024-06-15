@@ -60,12 +60,16 @@ export class OrderControllerBase {
           : undefined,
       },
       select: {
+        carrier: true,
+        carrierInformation: true,
         createdAt: true,
         id: true,
         orderNumber: true,
+        orderStatus: true,
         shippingAddress: true,
         status: true,
         totalAmount: true,
+        trackingNumber: true,
         updatedAt: true,
 
         user: {
@@ -94,12 +98,16 @@ export class OrderControllerBase {
     return this.service.orders({
       ...args,
       select: {
+        carrier: true,
+        carrierInformation: true,
         createdAt: true,
         id: true,
         orderNumber: true,
+        orderStatus: true,
         shippingAddress: true,
         status: true,
         totalAmount: true,
+        trackingNumber: true,
         updatedAt: true,
 
         user: {
@@ -129,12 +137,16 @@ export class OrderControllerBase {
     const result = await this.service.order({
       where: params,
       select: {
+        carrier: true,
+        carrierInformation: true,
         createdAt: true,
         id: true,
         orderNumber: true,
+        orderStatus: true,
         shippingAddress: true,
         status: true,
         totalAmount: true,
+        trackingNumber: true,
         updatedAt: true,
 
         user: {
@@ -181,12 +193,16 @@ export class OrderControllerBase {
             : undefined,
         },
         select: {
+          carrier: true,
+          carrierInformation: true,
           createdAt: true,
           id: true,
           orderNumber: true,
+          orderStatus: true,
           shippingAddress: true,
           status: true,
           totalAmount: true,
+          trackingNumber: true,
           updatedAt: true,
 
           user: {
@@ -224,12 +240,16 @@ export class OrderControllerBase {
       return await this.service.deleteOrder({
         where: params,
         select: {
+          carrier: true,
+          carrierInformation: true,
           createdAt: true,
           id: true,
           orderNumber: true,
+          orderStatus: true,
           shippingAddress: true,
           status: true,
           totalAmount: true,
+          trackingNumber: true,
           updatedAt: true,
 
           user: {
@@ -268,6 +288,7 @@ export class OrderControllerBase {
         category: true,
         createdAt: true,
         description: true,
+        dimensions: true,
         id: true,
         images: true,
         name: true,
@@ -279,7 +300,11 @@ export class OrderControllerBase {
         },
 
         price: true,
+        shippingOptions: true,
+        status: true,
+        stockQuantity: true,
         updatedAt: true,
+        weight: true,
       },
     });
     if (results === null) {

@@ -28,6 +28,28 @@ class OrderOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  carrier?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  carrierInformation?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   createdAt?: SortOrder;
 
   @ApiProperty({
@@ -61,6 +83,17 @@ class OrderOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  orderStatus?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   shippingAddress?: SortOrder;
 
   @ApiProperty({
@@ -84,6 +117,17 @@ class OrderOrderByInput {
     nullable: true,
   })
   totalAmount?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  trackingNumber?: SortOrder;
 
   @ApiProperty({
     required: false,

@@ -18,44 +18,52 @@ import { UserService } from "../user.service";
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
+  billingAddress: "exampleBillingAddress",
   createdAt: new Date(),
   email: "exampleEmail",
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
   password: "examplePassword",
+  shippingAddress: "exampleShippingAddress",
   updatedAt: new Date(),
   username: "exampleUsername",
 };
 const CREATE_RESULT = {
+  billingAddress: "exampleBillingAddress",
   createdAt: new Date(),
   email: "exampleEmail",
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
   password: "examplePassword",
+  shippingAddress: "exampleShippingAddress",
   updatedAt: new Date(),
   username: "exampleUsername",
 };
 const FIND_MANY_RESULT = [
   {
+    billingAddress: "exampleBillingAddress",
     createdAt: new Date(),
     email: "exampleEmail",
     firstName: "exampleFirstName",
     id: "exampleId",
     lastName: "exampleLastName",
     password: "examplePassword",
+    shippingAddress: "exampleShippingAddress",
     updatedAt: new Date(),
     username: "exampleUsername",
   },
 ];
 const FIND_ONE_RESULT = {
+  billingAddress: "exampleBillingAddress",
   createdAt: new Date(),
   email: "exampleEmail",
   firstName: "exampleFirstName",
   id: "exampleId",
   lastName: "exampleLastName",
   password: "examplePassword",
+  shippingAddress: "exampleShippingAddress",
   updatedAt: new Date(),
   username: "exampleUsername",
 };

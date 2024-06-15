@@ -11,16 +11,29 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested } from "class-validator";
+import { IsString, IsOptional, ValidateNested, IsEnum } from "class-validator";
 import { OrderCreateNestedManyWithoutUsersInput } from "./OrderCreateNestedManyWithoutUsersInput";
 import { Type } from "class-transformer";
-import { ReviewCreateNestedManyWithoutUsersInput } from "./ReviewCreateNestedManyWithoutUsersInput";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
+import { ReviewCreateNestedManyWithoutUsersInput } from "./ReviewCreateNestedManyWithoutUsersInput";
+import { EnumUserRole } from "./EnumUserRole";
+import { WishlistCreateNestedManyWithoutUsersInput } from "./WishlistCreateNestedManyWithoutUsersInput";
 
 @InputType()
 class UserCreateInput {
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  billingAddress?: string | null;
+
   @ApiProperty({
     required: false,
     type: String,
@@ -76,6 +89,16 @@ class UserCreateInput {
 
   @ApiProperty({
     required: false,
+  })
+  @IsJSONValue()
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  profilePicture?: InputJsonValue;
+
+  @ApiProperty({
+    required: false,
     type: () => ReviewCreateNestedManyWithoutUsersInput,
   })
   @ValidateNested()
@@ -87,11 +110,33 @@ class UserCreateInput {
   reviews?: ReviewCreateNestedManyWithoutUsersInput;
 
   @ApiProperty({
+    required: false,
+    enum: EnumUserRole,
+  })
+  @IsEnum(EnumUserRole)
+  @IsOptional()
+  @Field(() => EnumUserRole, {
+    nullable: true,
+  })
+  role?: "Option1" | null;
+
+  @ApiProperty({
     required: true,
   })
   @IsJSONValue()
   @Field(() => GraphQLJSON)
   roles!: InputJsonValue;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  shippingAddress?: string | null;
 
   @ApiProperty({
     required: true,
@@ -100,6 +145,18 @@ class UserCreateInput {
   @IsString()
   @Field(() => String)
   username!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => WishlistCreateNestedManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => WishlistCreateNestedManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => WishlistCreateNestedManyWithoutUsersInput, {
+    nullable: true,
+  })
+  wishlists?: WishlistCreateNestedManyWithoutUsersInput;
 }
 
 export { UserCreateInput as UserCreateInput };

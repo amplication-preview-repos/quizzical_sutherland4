@@ -16,6 +16,8 @@ import {
   IsOptional,
   ValidateNested,
   IsNumber,
+  IsEnum,
+  IsInt,
 } from "class-validator";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
@@ -23,6 +25,9 @@ import { InputJsonValue } from "../../types";
 import { OrderWhereUniqueInput } from "../../order/base/OrderWhereUniqueInput";
 import { Type } from "class-transformer";
 import { ReviewUpdateManyWithoutProductsInput } from "./ReviewUpdateManyWithoutProductsInput";
+import { EnumProductShippingOptions } from "./EnumProductShippingOptions";
+import { EnumProductStatus } from "./EnumProductStatus";
+import { WishlistUpdateManyWithoutProductsInput } from "./WishlistUpdateManyWithoutProductsInput";
 
 @InputType()
 class ProductUpdateInput {
@@ -47,6 +52,17 @@ class ProductUpdateInput {
     nullable: true,
   })
   description?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  dimensions?: string | null;
 
   @ApiProperty({
     required: false,
@@ -103,6 +119,65 @@ class ProductUpdateInput {
     nullable: true,
   })
   reviews?: ReviewUpdateManyWithoutProductsInput;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumProductShippingOptions,
+    isArray: true,
+  })
+  @IsEnum(EnumProductShippingOptions, {
+    each: true,
+  })
+  @IsOptional()
+  @Field(() => [EnumProductShippingOptions], {
+    nullable: true,
+  })
+  shippingOptions?: Array<"Option1">;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumProductStatus,
+  })
+  @IsEnum(EnumProductStatus)
+  @IsOptional()
+  @Field(() => EnumProductStatus, {
+    nullable: true,
+  })
+  status?: "Option1" | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  stockQuantity?: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsNumber()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  weight?: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => WishlistUpdateManyWithoutProductsInput,
+  })
+  @ValidateNested()
+  @Type(() => WishlistUpdateManyWithoutProductsInput)
+  @IsOptional()
+  @Field(() => WishlistUpdateManyWithoutProductsInput, {
+    nullable: true,
+  })
+  wishlists?: WishlistUpdateManyWithoutProductsInput;
 }
 
 export { ProductUpdateInput as ProductUpdateInput };

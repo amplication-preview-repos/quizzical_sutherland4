@@ -11,7 +11,13 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested, IsInt } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsBoolean,
+  ValidateNested,
+  IsInt,
+} from "class-validator";
 import { ProductWhereUniqueInput } from "../../product/base/ProductWhereUniqueInput";
 import { Type } from "class-transformer";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
@@ -28,6 +34,17 @@ class ReviewCreateInput {
     nullable: true,
   })
   comment?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Field(() => Boolean, {
+    nullable: true,
+  })
+  isVerified?: boolean | null;
 
   @ApiProperty({
     required: false,

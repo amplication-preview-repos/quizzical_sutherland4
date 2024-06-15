@@ -61,6 +61,28 @@ class MessageOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  isRead?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  receivedAtTimestamp?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   receiver?: SortOrder;
 
   @ApiProperty({
@@ -84,6 +106,17 @@ class MessageOrderByInput {
     nullable: true,
   })
   sentAt?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  sentAtTimestamp?: SortOrder;
 
   @ApiProperty({
     required: false,

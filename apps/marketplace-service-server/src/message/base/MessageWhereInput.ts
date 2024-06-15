@@ -15,6 +15,7 @@ import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
 import { IsOptional } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
+import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 
 @InputType()
@@ -40,6 +41,28 @@ class MessageWhereInput {
     nullable: true,
   })
   id?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: BooleanNullableFilter,
+  })
+  @Type(() => BooleanNullableFilter)
+  @IsOptional()
+  @Field(() => BooleanNullableFilter, {
+    nullable: true,
+  })
+  isRead?: BooleanNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: DateTimeNullableFilter,
+  })
+  @Type(() => DateTimeNullableFilter)
+  @IsOptional()
+  @Field(() => DateTimeNullableFilter, {
+    nullable: true,
+  })
+  receivedAtTimestamp?: DateTimeNullableFilter;
 
   @ApiProperty({
     required: false,
@@ -73,6 +96,17 @@ class MessageWhereInput {
     nullable: true,
   })
   sentAt?: DateTimeNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: DateTimeNullableFilter,
+  })
+  @Type(() => DateTimeNullableFilter)
+  @IsOptional()
+  @Field(() => DateTimeNullableFilter, {
+    nullable: true,
+  })
+  sentAtTimestamp?: DateTimeNullableFilter;
 }
 
 export { MessageWhereInput as MessageWhereInput };

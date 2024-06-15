@@ -13,13 +13,27 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
-import { IsOptional, ValidateNested } from "class-validator";
+import { IsOptional, ValidateNested, IsEnum } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
 import { OrderListRelationFilter } from "../../order/base/OrderListRelationFilter";
+import { JsonFilter } from "../../util/JsonFilter";
 import { ReviewListRelationFilter } from "../../review/base/ReviewListRelationFilter";
+import { EnumUserRole } from "./EnumUserRole";
+import { WishlistListRelationFilter } from "../../wishlist/base/WishlistListRelationFilter";
 
 @InputType()
 class UserWhereInput {
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  billingAddress?: StringNullableFilter;
+
   @ApiProperty({
     required: false,
     type: StringNullableFilter,
@@ -78,6 +92,17 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
+    type: JsonFilter,
+  })
+  @Type(() => JsonFilter)
+  @IsOptional()
+  @Field(() => JsonFilter, {
+    nullable: true,
+  })
+  profilePicture?: JsonFilter;
+
+  @ApiProperty({
+    required: false,
     type: () => ReviewListRelationFilter,
   })
   @ValidateNested()
@@ -90,6 +115,28 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
+    enum: EnumUserRole,
+  })
+  @IsEnum(EnumUserRole)
+  @IsOptional()
+  @Field(() => EnumUserRole, {
+    nullable: true,
+  })
+  role?: "Option1";
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  shippingAddress?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
     type: StringFilter,
   })
   @Type(() => StringFilter)
@@ -98,6 +145,18 @@ class UserWhereInput {
     nullable: true,
   })
   username?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => WishlistListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => WishlistListRelationFilter)
+  @IsOptional()
+  @Field(() => WishlistListRelationFilter, {
+    nullable: true,
+  })
+  wishlists?: WishlistListRelationFilter;
 }
 
 export { UserWhereInput as UserWhereInput };

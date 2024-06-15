@@ -21,6 +21,7 @@ const CREATE_INPUT = {
   comment: "exampleComment",
   createdAt: new Date(),
   id: "exampleId",
+  isVerified: "true",
   rating: 42,
   updatedAt: new Date(),
 };
@@ -28,6 +29,7 @@ const CREATE_RESULT = {
   comment: "exampleComment",
   createdAt: new Date(),
   id: "exampleId",
+  isVerified: "true",
   rating: 42,
   updatedAt: new Date(),
 };
@@ -36,6 +38,7 @@ const FIND_MANY_RESULT = [
     comment: "exampleComment",
     createdAt: new Date(),
     id: "exampleId",
+    isVerified: "true",
     rating: 42,
     updatedAt: new Date(),
   },
@@ -44,6 +47,7 @@ const FIND_ONE_RESULT = {
   comment: "exampleComment",
   createdAt: new Date(),
   id: "exampleId",
+  isVerified: "true",
   rating: 42,
   updatedAt: new Date(),
 };

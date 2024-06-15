@@ -15,6 +15,7 @@ import {
   IsString,
   IsOptional,
   IsDate,
+  IsBoolean,
   ValidateNested,
   IsInt,
 } from "class-validator";
@@ -50,6 +51,17 @@ class Review {
   @IsString()
   @Field(() => String)
   id!: string;
+
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Field(() => Boolean, {
+    nullable: true,
+  })
+  isVerified!: boolean | null;
 
   @ApiProperty({
     required: false,

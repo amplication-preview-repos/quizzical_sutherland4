@@ -21,18 +21,24 @@ const CREATE_INPUT = {
   content: "exampleContent",
   createdAt: new Date(),
   id: "exampleId",
+  isRead: "true",
+  receivedAtTimestamp: new Date(),
   receiver: "exampleReceiver",
   sender: "exampleSender",
   sentAt: new Date(),
+  sentAtTimestamp: new Date(),
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
   content: "exampleContent",
   createdAt: new Date(),
   id: "exampleId",
+  isRead: "true",
+  receivedAtTimestamp: new Date(),
   receiver: "exampleReceiver",
   sender: "exampleSender",
   sentAt: new Date(),
+  sentAtTimestamp: new Date(),
   updatedAt: new Date(),
 };
 const FIND_MANY_RESULT = [
@@ -40,9 +46,12 @@ const FIND_MANY_RESULT = [
     content: "exampleContent",
     createdAt: new Date(),
     id: "exampleId",
+    isRead: "true",
+    receivedAtTimestamp: new Date(),
     receiver: "exampleReceiver",
     sender: "exampleSender",
     sentAt: new Date(),
+    sentAtTimestamp: new Date(),
     updatedAt: new Date(),
   },
 ];
@@ -50,9 +59,12 @@ const FIND_ONE_RESULT = {
   content: "exampleContent",
   createdAt: new Date(),
   id: "exampleId",
+  isRead: "true",
+  receivedAtTimestamp: new Date(),
   receiver: "exampleReceiver",
   sender: "exampleSender",
   sentAt: new Date(),
+  sentAtTimestamp: new Date(),
   updatedAt: new Date(),
 };
 
@@ -139,7 +151,9 @@ describe("Message", () => {
       .expect({
         ...CREATE_RESULT,
         createdAt: CREATE_RESULT.createdAt.toISOString(),
+        receivedAtTimestamp: CREATE_RESULT.receivedAtTimestamp.toISOString(),
         sentAt: CREATE_RESULT.sentAt.toISOString(),
+        sentAtTimestamp: CREATE_RESULT.sentAtTimestamp.toISOString(),
         updatedAt: CREATE_RESULT.updatedAt.toISOString(),
       });
   });
@@ -152,7 +166,10 @@ describe("Message", () => {
         {
           ...FIND_MANY_RESULT[0],
           createdAt: FIND_MANY_RESULT[0].createdAt.toISOString(),
+          receivedAtTimestamp:
+            FIND_MANY_RESULT[0].receivedAtTimestamp.toISOString(),
           sentAt: FIND_MANY_RESULT[0].sentAt.toISOString(),
+          sentAtTimestamp: FIND_MANY_RESULT[0].sentAtTimestamp.toISOString(),
           updatedAt: FIND_MANY_RESULT[0].updatedAt.toISOString(),
         },
       ]);
@@ -176,7 +193,9 @@ describe("Message", () => {
       .expect({
         ...FIND_ONE_RESULT,
         createdAt: FIND_ONE_RESULT.createdAt.toISOString(),
+        receivedAtTimestamp: FIND_ONE_RESULT.receivedAtTimestamp.toISOString(),
         sentAt: FIND_ONE_RESULT.sentAt.toISOString(),
+        sentAtTimestamp: FIND_ONE_RESULT.sentAtTimestamp.toISOString(),
         updatedAt: FIND_ONE_RESULT.updatedAt.toISOString(),
       });
   });
@@ -190,7 +209,9 @@ describe("Message", () => {
       .expect({
         ...CREATE_RESULT,
         createdAt: CREATE_RESULT.createdAt.toISOString(),
+        receivedAtTimestamp: CREATE_RESULT.receivedAtTimestamp.toISOString(),
         sentAt: CREATE_RESULT.sentAt.toISOString(),
+        sentAtTimestamp: CREATE_RESULT.sentAtTimestamp.toISOString(),
         updatedAt: CREATE_RESULT.updatedAt.toISOString(),
       })
       .then(function () {

@@ -21,39 +21,51 @@ const CREATE_INPUT = {
   category: "exampleCategory",
   createdAt: new Date(),
   description: "exampleDescription",
+  dimensions: "exampleDimensions",
   id: "exampleId",
   name: "exampleName",
   price: 42.42,
+  stockQuantity: 42,
   updatedAt: new Date(),
+  weight: 42.42,
 };
 const CREATE_RESULT = {
   category: "exampleCategory",
   createdAt: new Date(),
   description: "exampleDescription",
+  dimensions: "exampleDimensions",
   id: "exampleId",
   name: "exampleName",
   price: 42.42,
+  stockQuantity: 42,
   updatedAt: new Date(),
+  weight: 42.42,
 };
 const FIND_MANY_RESULT = [
   {
     category: "exampleCategory",
     createdAt: new Date(),
     description: "exampleDescription",
+    dimensions: "exampleDimensions",
     id: "exampleId",
     name: "exampleName",
     price: 42.42,
+    stockQuantity: 42,
     updatedAt: new Date(),
+    weight: 42.42,
   },
 ];
 const FIND_ONE_RESULT = {
   category: "exampleCategory",
   createdAt: new Date(),
   description: "exampleDescription",
+  dimensions: "exampleDimensions",
   id: "exampleId",
   name: "exampleName",
   price: 42.42,
+  stockQuantity: 42,
   updatedAt: new Date(),
+  weight: 42.42,
 };
 
 const service = {

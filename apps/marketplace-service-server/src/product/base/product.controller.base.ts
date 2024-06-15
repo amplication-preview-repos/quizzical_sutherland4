@@ -29,6 +29,9 @@ import { ProductUpdateInput } from "./ProductUpdateInput";
 import { ReviewFindManyArgs } from "../../review/base/ReviewFindManyArgs";
 import { Review } from "../../review/base/Review";
 import { ReviewWhereUniqueInput } from "../../review/base/ReviewWhereUniqueInput";
+import { WishlistFindManyArgs } from "../../wishlist/base/WishlistFindManyArgs";
+import { Wishlist } from "../../wishlist/base/Wishlist";
+import { WishlistWhereUniqueInput } from "../../wishlist/base/WishlistWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -65,6 +68,7 @@ export class ProductControllerBase {
         category: true,
         createdAt: true,
         description: true,
+        dimensions: true,
         id: true,
         images: true,
         name: true,
@@ -76,7 +80,11 @@ export class ProductControllerBase {
         },
 
         price: true,
+        shippingOptions: true,
+        status: true,
+        stockQuantity: true,
         updatedAt: true,
+        weight: true,
       },
     });
   }
@@ -101,6 +109,7 @@ export class ProductControllerBase {
         category: true,
         createdAt: true,
         description: true,
+        dimensions: true,
         id: true,
         images: true,
         name: true,
@@ -112,7 +121,11 @@ export class ProductControllerBase {
         },
 
         price: true,
+        shippingOptions: true,
+        status: true,
+        stockQuantity: true,
         updatedAt: true,
+        weight: true,
       },
     });
   }
@@ -138,6 +151,7 @@ export class ProductControllerBase {
         category: true,
         createdAt: true,
         description: true,
+        dimensions: true,
         id: true,
         images: true,
         name: true,
@@ -149,7 +163,11 @@ export class ProductControllerBase {
         },
 
         price: true,
+        shippingOptions: true,
+        status: true,
+        stockQuantity: true,
         updatedAt: true,
+        weight: true,
       },
     });
     if (result === null) {
@@ -192,6 +210,7 @@ export class ProductControllerBase {
           category: true,
           createdAt: true,
           description: true,
+          dimensions: true,
           id: true,
           images: true,
           name: true,
@@ -203,7 +222,11 @@ export class ProductControllerBase {
           },
 
           price: true,
+          shippingOptions: true,
+          status: true,
+          stockQuantity: true,
           updatedAt: true,
+          weight: true,
         },
       });
     } catch (error) {
@@ -237,6 +260,7 @@ export class ProductControllerBase {
           category: true,
           createdAt: true,
           description: true,
+          dimensions: true,
           id: true,
           images: true,
           name: true,
@@ -248,7 +272,11 @@ export class ProductControllerBase {
           },
 
           price: true,
+          shippingOptions: true,
+          status: true,
+          stockQuantity: true,
           updatedAt: true,
+          weight: true,
         },
       });
     } catch (error) {
@@ -280,6 +308,7 @@ export class ProductControllerBase {
         comment: true,
         createdAt: true,
         id: true,
+        isVerified: true,
 
         product: {
           select: {
@@ -361,6 +390,115 @@ export class ProductControllerBase {
   ): Promise<void> {
     const data = {
       reviews: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateProduct({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/wishlists")
+  @ApiNestedQuery(WishlistFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Wishlist",
+    action: "read",
+    possession: "any",
+  })
+  async findWishlists(
+    @common.Req() request: Request,
+    @common.Param() params: ProductWhereUniqueInput
+  ): Promise<Wishlist[]> {
+    const query = plainToClass(WishlistFindManyArgs, request.query);
+    const results = await this.service.findWishlists(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        id: true,
+        notes: true,
+
+        product: {
+          select: {
+            id: true,
+          },
+        },
+
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/wishlists")
+  @nestAccessControl.UseRoles({
+    resource: "Product",
+    action: "update",
+    possession: "any",
+  })
+  async connectWishlists(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: WishlistWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      wishlists: {
+        connect: body,
+      },
+    };
+    await this.service.updateProduct({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/wishlists")
+  @nestAccessControl.UseRoles({
+    resource: "Product",
+    action: "update",
+    possession: "any",
+  })
+  async updateWishlists(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: WishlistWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      wishlists: {
+        set: body,
+      },
+    };
+    await this.service.updateProduct({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/wishlists")
+  @nestAccessControl.UseRoles({
+    resource: "Product",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectWishlists(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: WishlistWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      wishlists: {
         disconnect: body,
       },
     };

@@ -5,6 +5,7 @@ import {
   SimpleForm,
   CreateProps,
   TextInput,
+  BooleanInput,
   ReferenceInput,
   SelectInput,
   NumberInput,
@@ -18,6 +19,7 @@ export const ReviewCreate = (props: CreateProps): React.ReactElement => {
     <Create {...props}>
       <SimpleForm>
         <TextInput label="comment" multiline source="comment" />
+        <BooleanInput label="isVerified" source="isVerified" />
         <ReferenceInput source="product.id" reference="Product" label="Product">
           <SelectInput optionText={ProductTitle} />
         </ReferenceInput>

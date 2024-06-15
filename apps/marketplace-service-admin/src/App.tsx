@@ -13,18 +13,22 @@ import { OrderList } from "./order/OrderList";
 import { OrderCreate } from "./order/OrderCreate";
 import { OrderEdit } from "./order/OrderEdit";
 import { OrderShow } from "./order/OrderShow";
-import { MessageList } from "./message/MessageList";
-import { MessageCreate } from "./message/MessageCreate";
-import { MessageEdit } from "./message/MessageEdit";
-import { MessageShow } from "./message/MessageShow";
 import { ReviewList } from "./review/ReviewList";
 import { ReviewCreate } from "./review/ReviewCreate";
 import { ReviewEdit } from "./review/ReviewEdit";
 import { ReviewShow } from "./review/ReviewShow";
+import { MessageList } from "./message/MessageList";
+import { MessageCreate } from "./message/MessageCreate";
+import { MessageEdit } from "./message/MessageEdit";
+import { MessageShow } from "./message/MessageShow";
 import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
+import { WishlistList } from "./wishlist/WishlistList";
+import { WishlistCreate } from "./wishlist/WishlistCreate";
+import { WishlistEdit } from "./wishlist/WishlistEdit";
+import { WishlistShow } from "./wishlist/WishlistShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -66,13 +70,6 @@ const App = (): React.ReactElement => {
           show={OrderShow}
         />
         <Resource
-          name="Message"
-          list={MessageList}
-          edit={MessageEdit}
-          create={MessageCreate}
-          show={MessageShow}
-        />
-        <Resource
           name="Review"
           list={ReviewList}
           edit={ReviewEdit}
@@ -80,11 +77,25 @@ const App = (): React.ReactElement => {
           show={ReviewShow}
         />
         <Resource
+          name="Message"
+          list={MessageList}
+          edit={MessageEdit}
+          create={MessageCreate}
+          show={MessageShow}
+        />
+        <Resource
           name="User"
           list={UserList}
           edit={UserEdit}
           create={UserCreate}
           show={UserShow}
+        />
+        <Resource
+          name="Wishlist"
+          list={WishlistList}
+          edit={WishlistEdit}
+          create={WishlistCreate}
+          show={WishlistShow}
         />
       </Admin>
     </div>

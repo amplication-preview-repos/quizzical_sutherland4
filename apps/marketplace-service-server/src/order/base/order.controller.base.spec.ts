@@ -18,41 +18,53 @@ import { OrderService } from "../order.service";
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
+  carrier: "exampleCarrier",
+  carrierInformation: "exampleCarrierInformation",
   createdAt: new Date(),
   id: "exampleId",
   orderNumber: "exampleOrderNumber",
   shippingAddress: "exampleShippingAddress",
   status: "exampleStatus",
   totalAmount: 42.42,
+  trackingNumber: "exampleTrackingNumber",
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
+  carrier: "exampleCarrier",
+  carrierInformation: "exampleCarrierInformation",
   createdAt: new Date(),
   id: "exampleId",
   orderNumber: "exampleOrderNumber",
   shippingAddress: "exampleShippingAddress",
   status: "exampleStatus",
   totalAmount: 42.42,
+  trackingNumber: "exampleTrackingNumber",
   updatedAt: new Date(),
 };
 const FIND_MANY_RESULT = [
   {
+    carrier: "exampleCarrier",
+    carrierInformation: "exampleCarrierInformation",
     createdAt: new Date(),
     id: "exampleId",
     orderNumber: "exampleOrderNumber",
     shippingAddress: "exampleShippingAddress",
     status: "exampleStatus",
     totalAmount: 42.42,
+    trackingNumber: "exampleTrackingNumber",
     updatedAt: new Date(),
   },
 ];
 const FIND_ONE_RESULT = {
+  carrier: "exampleCarrier",
+  carrierInformation: "exampleCarrierInformation",
   createdAt: new Date(),
   id: "exampleId",
   orderNumber: "exampleOrderNumber",
   shippingAddress: "exampleShippingAddress",
   status: "exampleStatus",
   totalAmount: 42.42,
+  trackingNumber: "exampleTrackingNumber",
   updatedAt: new Date(),
 };
 

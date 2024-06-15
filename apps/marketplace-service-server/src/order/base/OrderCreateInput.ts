@@ -14,9 +14,11 @@ import { ApiProperty } from "@nestjs/swagger";
 import {
   IsString,
   IsOptional,
+  IsEnum,
   ValidateNested,
   IsNumber,
 } from "class-validator";
+import { EnumOrderOrderStatus } from "./EnumOrderOrderStatus";
 import { ProductCreateNestedManyWithoutOrdersInput } from "./ProductCreateNestedManyWithoutOrdersInput";
 import { Type } from "class-transformer";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
@@ -32,7 +34,40 @@ class OrderCreateInput {
   @Field(() => String, {
     nullable: true,
   })
+  carrier?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  carrierInformation?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
   orderNumber?: string | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumOrderOrderStatus,
+  })
+  @IsEnum(EnumOrderOrderStatus)
+  @IsOptional()
+  @Field(() => EnumOrderOrderStatus, {
+    nullable: true,
+  })
+  orderStatus?: "Option1" | null;
 
   @ApiProperty({
     required: false,
@@ -78,6 +113,17 @@ class OrderCreateInput {
     nullable: true,
   })
   totalAmount?: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  trackingNumber?: string | null;
 
   @ApiProperty({
     required: false,

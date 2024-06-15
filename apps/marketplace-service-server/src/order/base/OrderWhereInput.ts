@@ -11,16 +11,39 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { StringFilter } from "../../util/StringFilter";
-import { Type } from "class-transformer";
-import { IsOptional, ValidateNested } from "class-validator";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { Type } from "class-transformer";
+import { IsOptional, IsEnum, ValidateNested } from "class-validator";
+import { StringFilter } from "../../util/StringFilter";
+import { EnumOrderOrderStatus } from "./EnumOrderOrderStatus";
 import { ProductListRelationFilter } from "../../product/base/ProductListRelationFilter";
 import { FloatNullableFilter } from "../../util/FloatNullableFilter";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
 @InputType()
 class OrderWhereInput {
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  carrier?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  carrierInformation?: StringNullableFilter;
+
   @ApiProperty({
     required: false,
     type: StringFilter,
@@ -42,6 +65,17 @@ class OrderWhereInput {
     nullable: true,
   })
   orderNumber?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumOrderOrderStatus,
+  })
+  @IsEnum(EnumOrderOrderStatus)
+  @IsOptional()
+  @Field(() => EnumOrderOrderStatus, {
+    nullable: true,
+  })
+  orderStatus?: "Option1";
 
   @ApiProperty({
     required: false,
@@ -87,6 +121,17 @@ class OrderWhereInput {
     nullable: true,
   })
   totalAmount?: FloatNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  trackingNumber?: StringNullableFilter;
 
   @ApiProperty({
     required: false,

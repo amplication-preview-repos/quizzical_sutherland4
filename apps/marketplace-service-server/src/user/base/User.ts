@@ -11,16 +11,35 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsDate,
+  ValidateNested,
+  IsEnum,
+} from "class-validator";
 import { Type } from "class-transformer";
 import { Order } from "../../order/base/Order";
-import { Review } from "../../review/base/Review";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
+import { Review } from "../../review/base/Review";
+import { EnumUserRole } from "./EnumUserRole";
+import { Wishlist } from "../../wishlist/base/Wishlist";
 
 @ObjectType()
 class User {
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  billingAddress!: string | null;
+
   @ApiProperty({
     required: true,
   })
@@ -81,6 +100,16 @@ class User {
 
   @ApiProperty({
     required: false,
+  })
+  @IsJSONValue()
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  profilePicture!: JsonValue;
+
+  @ApiProperty({
+    required: false,
     type: () => [Review],
   })
   @ValidateNested()
@@ -89,11 +118,33 @@ class User {
   reviews?: Array<Review>;
 
   @ApiProperty({
+    required: false,
+    enum: EnumUserRole,
+  })
+  @IsEnum(EnumUserRole)
+  @IsOptional()
+  @Field(() => EnumUserRole, {
+    nullable: true,
+  })
+  role?: "Option1" | null;
+
+  @ApiProperty({
     required: true,
   })
   @IsJSONValue()
   @Field(() => GraphQLJSON)
   roles!: JsonValue;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  shippingAddress!: string | null;
 
   @ApiProperty({
     required: true,
@@ -110,6 +161,15 @@ class User {
   @IsString()
   @Field(() => String)
   username!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Wishlist],
+  })
+  @ValidateNested()
+  @Type(() => Wishlist)
+  @IsOptional()
+  wishlists?: Array<Wishlist>;
 }
 
 export { User as User };

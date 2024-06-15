@@ -4,8 +4,8 @@ import {
   Show,
   SimpleShowLayout,
   ShowProps,
-  DateField,
   TextField,
+  DateField,
   ReferenceField,
   ReferenceManyField,
   Datagrid,
@@ -18,12 +18,16 @@ export const OrderShow = (props: ShowProps): React.ReactElement => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
+        <TextField label="carrier" source="carrier" />
+        <TextField label="carrierInformation" source="carrierInformation" />
         <DateField source="createdAt" label="Created At" />
         <TextField label="ID" source="id" />
         <TextField label="orderNumber" source="orderNumber" />
+        <TextField label="orderStatus" source="orderStatus" />
         <TextField label="shippingAddress" source="shippingAddress" />
         <TextField label="status" source="status" />
         <TextField label="totalAmount" source="totalAmount" />
+        <TextField label="trackingNumber" source="trackingNumber" />
         <DateField source="updatedAt" label="Updated At" />
         <ReferenceField label="User" source="user.id" reference="User">
           <TextField source={USER_TITLE_FIELD} />
@@ -37,6 +41,7 @@ export const OrderShow = (props: ShowProps): React.ReactElement => {
             <TextField label="category" source="category" />
             <DateField source="createdAt" label="Created At" />
             <TextField label="description" source="description" />
+            <TextField label="dimensions" source="dimensions" />
             <TextField label="ID" source="id" />
             <TextField label="images" source="images" />
             <TextField label="name" source="name" />
@@ -44,7 +49,11 @@ export const OrderShow = (props: ShowProps): React.ReactElement => {
               <TextField source={ORDER_TITLE_FIELD} />
             </ReferenceField>
             <TextField label="price" source="price" />
+            <TextField label="shippingOptions" source="shippingOptions" />
+            <TextField label="status" source="status" />
+            <TextField label="stockQuantity" source="stockQuantity" />
             <DateField source="updatedAt" label="Updated At" />
+            <TextField label="weight" source="weight" />
           </Datagrid>
         </ReferenceManyField>
       </SimpleShowLayout>

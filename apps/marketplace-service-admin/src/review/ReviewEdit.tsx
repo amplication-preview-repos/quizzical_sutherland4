@@ -5,6 +5,7 @@ import {
   SimpleForm,
   EditProps,
   TextInput,
+  BooleanInput,
   ReferenceInput,
   SelectInput,
   NumberInput,
@@ -18,6 +19,7 @@ export const ReviewEdit = (props: EditProps): React.ReactElement => {
     <Edit {...props}>
       <SimpleForm>
         <TextInput label="comment" multiline source="comment" />
+        <BooleanInput label="isVerified" source="isVerified" />
         <ReferenceInput source="product.id" reference="Product" label="Product">
           <SelectInput optionText={ProductTitle} />
         </ReferenceInput>

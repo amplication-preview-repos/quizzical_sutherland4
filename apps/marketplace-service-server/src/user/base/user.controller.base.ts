@@ -32,6 +32,9 @@ import { OrderWhereUniqueInput } from "../../order/base/OrderWhereUniqueInput";
 import { ReviewFindManyArgs } from "../../review/base/ReviewFindManyArgs";
 import { Review } from "../../review/base/Review";
 import { ReviewWhereUniqueInput } from "../../review/base/ReviewWhereUniqueInput";
+import { WishlistFindManyArgs } from "../../wishlist/base/WishlistFindManyArgs";
+import { Wishlist } from "../../wishlist/base/Wishlist";
+import { WishlistWhereUniqueInput } from "../../wishlist/base/WishlistWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -55,12 +58,16 @@ export class UserControllerBase {
     return await this.service.createUser({
       data: data,
       select: {
+        billingAddress: true,
         createdAt: true,
         email: true,
         firstName: true,
         id: true,
         lastName: true,
+        profilePicture: true,
+        role: true,
         roles: true,
+        shippingAddress: true,
         updatedAt: true,
         username: true,
       },
@@ -84,12 +91,16 @@ export class UserControllerBase {
     return this.service.users({
       ...args,
       select: {
+        billingAddress: true,
         createdAt: true,
         email: true,
         firstName: true,
         id: true,
         lastName: true,
+        profilePicture: true,
+        role: true,
         roles: true,
+        shippingAddress: true,
         updatedAt: true,
         username: true,
       },
@@ -114,12 +125,16 @@ export class UserControllerBase {
     const result = await this.service.user({
       where: params,
       select: {
+        billingAddress: true,
         createdAt: true,
         email: true,
         firstName: true,
         id: true,
         lastName: true,
+        profilePicture: true,
+        role: true,
         roles: true,
+        shippingAddress: true,
         updatedAt: true,
         username: true,
       },
@@ -153,12 +168,16 @@ export class UserControllerBase {
         where: params,
         data: data,
         select: {
+          billingAddress: true,
           createdAt: true,
           email: true,
           firstName: true,
           id: true,
           lastName: true,
+          profilePicture: true,
+          role: true,
           roles: true,
+          shippingAddress: true,
           updatedAt: true,
           username: true,
         },
@@ -191,12 +210,16 @@ export class UserControllerBase {
       return await this.service.deleteUser({
         where: params,
         select: {
+          billingAddress: true,
           createdAt: true,
           email: true,
           firstName: true,
           id: true,
           lastName: true,
+          profilePicture: true,
+          role: true,
           roles: true,
+          shippingAddress: true,
           updatedAt: true,
           username: true,
         },
@@ -227,12 +250,16 @@ export class UserControllerBase {
     const results = await this.service.findOrders(params.id, {
       ...query,
       select: {
+        carrier: true,
+        carrierInformation: true,
         createdAt: true,
         id: true,
         orderNumber: true,
+        orderStatus: true,
         shippingAddress: true,
         status: true,
         totalAmount: true,
+        trackingNumber: true,
         updatedAt: true,
 
         user: {
@@ -335,6 +362,7 @@ export class UserControllerBase {
         comment: true,
         createdAt: true,
         id: true,
+        isVerified: true,
 
         product: {
           select: {
@@ -416,6 +444,115 @@ export class UserControllerBase {
   ): Promise<void> {
     const data = {
       reviews: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/wishlists")
+  @ApiNestedQuery(WishlistFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Wishlist",
+    action: "read",
+    possession: "any",
+  })
+  async findWishlists(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Wishlist[]> {
+    const query = plainToClass(WishlistFindManyArgs, request.query);
+    const results = await this.service.findWishlists(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        id: true,
+        notes: true,
+
+        product: {
+          select: {
+            id: true,
+          },
+        },
+
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/wishlists")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectWishlists(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: WishlistWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      wishlists: {
+        connect: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/wishlists")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateWishlists(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: WishlistWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      wishlists: {
+        set: body,
+      },
+    };
+    await this.service.updateUser({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/wishlists")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectWishlists(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: WishlistWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      wishlists: {
         disconnect: body,
       },
     };
